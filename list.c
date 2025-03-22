@@ -79,29 +79,60 @@ void pushFront(List *list, void *data) {
 }
 
 
-void pushBack(List * list, void * data) {
+void pushCurrent(List *list, void *data) {
+    if (list == NULL || list->current == NULL) return;  // Si la lista o current son NULL, no hace nada
+    Node *newNode = createNode(data);  // Crea un nuevo nodo
+    newNode->next = list->current->next;  // Enlaza el siguiente nodo
+    if (list->current->next != NULL) {
+        list->current->next->prev = newNode;  // Si hay un siguiente nodo, ajusta su anterior
+    }
+    list->current->next = newNode;  // Enlaza el nuevo nodo al nodo actual
+    newNode->prev = list->current;  // Enlaza el nuevo nodo al nodo anterior
+    if (list->current == list->tail) {
+        list->tail = newNode;  // Si el current es el último nodo, actualiza el tail
+    }
+}
+
+void pushBack(List *list, void *data) {
     list->current = list->tail;
-    pushCurrent(list,data);
+    pushCurrent(list, data);
 }
 
-void pushCurrent(List * list, void * data) {
-}
-
-void * popFront(List * list) {
+void * popFront(List *list) {
     list->current = list->head;
     return popCurrent(list);
 }
 
-void * popBack(List * list) {
+void * popBack(List *list) {
     list->current = list->tail;
     return popCurrent(list);
 }
 
-void * popCurrent(List * list) {
-    return NULL;
+
+void * popCurrent(List *list) {
+    if (list == NULL || list->current == NULL) return NULL;  // Verifica si la lista o current son NULL
+    Node *temp = list->current;
+    void *data = temp->data;  // Guarda el dato del nodo que se va a eliminar
+    
+    // Ajuste de los enlaces
+    if (temp->prev != NULL) {
+        temp->prev->next = temp->next;
+    } else {
+        list->head = temp->next;  // Si el nodo a eliminar es el head, actualiza el head
+    }
+    if (temp->next != NULL) {
+        temp->next->prev = temp->prev;
+    } else {
+        list->tail = temp->prev;  // Si el nodo a eliminar es el tail, actualiza el tail
+    }
+    
+    list->current = temp->next;  // Mueve el current al siguiente nodo
+    free(temp);  // Libera la memoria del nodo eliminado
+    return data;  // Retorna el dato del nodo eliminado
 }
 
-void cleanList(List * list) {
+
+void cleanList(List *list) {
     while (list->head != NULL) {
         popFront(list);
     }
