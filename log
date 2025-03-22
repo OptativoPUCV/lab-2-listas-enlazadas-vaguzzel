@@ -14,3 +14,9 @@ sá., 22 de mar. de 2025 16:24:43:
  tests:  5|4
 total_score: 25/70
 a18412f
+sá., 22 de mar. de 2025 16:25:40: 
+ list.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
+ tests:  9|3
+total_score: 35/70
+8ea33c1
