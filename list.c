@@ -28,10 +28,10 @@ Node * createNode(void * data) {
     return new;
 }
 
-List * createList(void) {
+List * createList() {
     List *list = (List *)malloc(sizeof(List));  // Reserva memoria para la estructura de la lista
-    if (list == NULL) exit(EXIT_FAILURE);  // Verifica que la memoria haya sido reservada correctamente
-    
+    if (list == NULL) exit(EXIT_FAILURE);  // Verifica que la memoria fue correctamente reservada
+
     list->head = NULL;   // Inicializa el puntero al primer nodo como NULL
     list->tail = NULL;   // Inicializa el puntero al último nodo como NULL
     list->current = NULL; // Inicializa el puntero 'current' como NULL
@@ -40,12 +40,16 @@ List * createList(void) {
 }
 
 
-void * firstList(List * list) {
-    return NULL;
+void * firstList(List *list) {
+    if (list == NULL || list->head == NULL) return NULL;  // Verifica si la lista está vacía
+    list->current = list->head;  // Apunta al primer nodo
+    return list->current->data;  // Retorna el dato del primer nodo
 }
 
-void * nextList(List * list) {
-    return NULL;
+void * nextList(List *list) {
+    if (list == NULL || list->current == NULL || list->current->next == NULL) return NULL;  // Si no hay siguiente nodo
+    list->current = list->current->next;  // Avanza al siguiente nodo
+    return list->current->data;  // Retorna el dato del siguiente nodo
 }
 
 void * lastList(List * list) {
