@@ -28,9 +28,17 @@ Node * createNode(void * data) {
     return new;
 }
 
-List * createList() {
-     return NULL;
+List * createList(void) {
+    List *list = (List *)malloc(sizeof(List));  // Reserva memoria para la estructura de la lista
+    if (list == NULL) exit(EXIT_FAILURE);  // Verifica que la memoria haya sido reservada correctamente
+    
+    list->head = NULL;   // Inicializa el puntero al primer nodo como NULL
+    list->tail = NULL;   // Inicializa el puntero al último nodo como NULL
+    list->current = NULL; // Inicializa el puntero 'current' como NULL
+
+    return list;  // Retorna el puntero a la lista recién creada
 }
+
 
 void * firstList(List * list) {
     return NULL;
